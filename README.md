@@ -1,5 +1,7 @@
 esbuild analog for [@babel/standalone](https://babeljs.io/docs/babel-standalone) built with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm)
 
+`esbuild-standalone` is a script that allows you to write JSX/TSX directly in HTML without any build steps. Your source code is sent to the Service Worker, compiled, cached, and served to the browser as a JavaScript module.
+
 ## Installation
 
 > [!IMPORTANT]
@@ -8,15 +10,17 @@ esbuild analog for [@babel/standalone](https://babeljs.io/docs/babel-standalone)
 
 ### Service Worker Setup
 
-Using npm:
+#### Option 1. Using npm:
 
 ```sh
 npx esbuild-standalone init
 ```
 
-Manually:
+#### Option 2. Manually:
 
 - copy file https://unpkg.com/esbuild-standalone@latest/service-worker.js in your project (public) root
+
+File should be available here: `http/:/{domain}/service-worker.js`
 
 ## Usage
 
@@ -49,6 +53,8 @@ Create `index.html` file:
       }
     }
     </script>
+    <!-- @IMPORTANT: Requires Service Worker Setup -->
+    <!-- /service-worker.js should be available -->
     <script src="https://esm.sh/esbuild-standalone" type="module"></script>
 
     <!-- Every script with "text/babel" will be built and executed with esbuild-wasm  -->
@@ -117,7 +123,7 @@ Create `index.tsx` file:
 ```tsx
 import { createRoot } from 'react-dom/client';
 
-import { App } from './app.js' // import via service worker
+import { App } from './app.jsx' // import via service worker
 
 const root = createRoot(document.getElementById("root"))
 root.render(<App />)
