@@ -1,0 +1,24 @@
+{
+  "name": "esbuild-standalone",
+  "version": "0.0.4",
+  "type": "module",
+  "bin": {
+    "esbuild-standalone": "./bin/index.js"
+  },
+  "dependencies": {
+    "@inquirer/confirm": "^5.1.20",
+    "picocolors": "^1.1.1",
+    "yargs": "^18.0.0"
+  },
+  "exports": {
+    ".": "./lib/esbuild-standalone.js",
+    "./sw": "./lib/esbuild-standalone-sw.js",
+    "./build": "./lib/build.js"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "service-worker.js",
+    "bin"
+  ]
+}
