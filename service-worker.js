@@ -1,7 +1,13 @@
 import { build } from 'https://esm.sh/esbuild-standalone/build';
 // import { build } from '/lib/build.js';
 
-// import path from 'https://cdn.skypack.dev/path';
+self.addEventListener('install', function (event) {
+  self.skipWaiting()
+});
+
+self.addEventListener('activate', function (event) {
+  event.waitUntil(self.clients.claim());
+});
 
 self.addEventListener("fetch", async (event) => {
   if (event.request.destination === 'script' && event.request.url.startsWith(self.location.origin) && event.request.url.match(/\.(jsx|ts|tsx|css|vue)/)) {
