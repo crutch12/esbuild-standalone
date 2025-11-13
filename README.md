@@ -20,7 +20,7 @@ npx esbuild-standalone init
 
 - copy file https://unpkg.com/esbuild-standalone@latest/service-worker.js in your project (public) root
 
-File should be available here: `http/:/{domain}/service-worker.js`
+File should be available here: `http://{domain}/service-worker.js`
 
 ## Usage
 
@@ -53,8 +53,6 @@ Create `index.html` file:
       }
     }
     </script>
-    <!-- @IMPORTANT: Requires Service Worker Setup -->
-    <!-- /service-worker.js should be available -->
     <script src="https://esm.sh/esbuild-standalone" type="module"></script>
 
     <!-- Every script with "text/babel" will be built and executed with esbuild-wasm  -->
@@ -108,10 +106,17 @@ Create `index.html` file:
       }
     }
     </script>
+    <!-- @IMPORTANT: Requires Service Worker Setup -->
+    <!-- /service-worker.js should be available -->
     <script src="https://esm.sh/esbuild-standalone/sw" type="module"></script>
 
+    <!-- @NOTE: You can provide url to service-worker.js file -->
+    <!-- <script src="https://esm.sh/esbuild-standalone/sw?url=/sw.js" type="module"></script> -->
+
     <!-- Every script with "text/esbuild" will be built and executed with esbuild-wasm too  -->
-    <script src="index.tsx" type="text/esbuild"> </script>
+    <script src="index.tsx" type="text/esbuild"></script>
+    <!-- type="module" works too -->
+    <!-- <script src="index.tsx" type="module"></script> -->
   </head>
   <body>
   </body>
