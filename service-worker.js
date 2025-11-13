@@ -1,5 +1,7 @@
 import { build } from 'https://esm.sh/esbuild-standalone/build';
+import { generateHash } from 'https://esm.sh/esbuild-standalone/utils';
 // import { build } from '/lib/build.js';
+// import { generateHash } from '/lib/utils.js';
 
 self.addEventListener('install', function (event) {
   self.skipWaiting()
@@ -14,8 +16,14 @@ self.addEventListener("fetch", async (event) => {
     event.respondWith((async () => {
       const pathname = new URL(event.request.url).pathname
 
-      const target = await fetch(event.request);
-      const text = await target.text()
+      const text = await fetch(event.request).then(target => target.text());
+
+      const [cacheKey, cache] = await Promise.all([generateHash(text), caches.open('esbuild-cache')])
+      const cachedResponse = await cache.match(cacheKey);
+
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
       const getLoader = (filename) => {
         // const loader = {
@@ -53,9 +61,13 @@ self.addEventListener("fetch", async (event) => {
 
       const bundledCode = await build(virtualFiles);
 
-      return new Response(bundledCode, {
+      const networkResponse = new Response(bundledCode, {
         headers: { 'Content-Type': 'application/javascript' }
       })
+
+      await cache.put(cacheKey, networkResponse.clone());
+
+      return networkResponse
     })())
   }
 });

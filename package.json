@@ -13,7 +13,8 @@
   "exports": {
     ".": "./lib/esbuild-standalone.js",
     "./sw": "./lib/esbuild-standalone-sw.js",
-    "./build": "./lib/build.js"
+    "./build": "./lib/build.js",
+    "./utils": "./lib/utils.js"
   },
   "files": [
     "lib",
