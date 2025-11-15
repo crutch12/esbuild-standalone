@@ -2,6 +2,8 @@
   "name": "esbuild-standalone",
   "version": "0.0.7",
   "type": "module",
+  "source": "./lib/sdk/index.js",
+  "main": "./umd/sdk.umd.js",
   "bin": {
     "esbuild-standalone": "./bin/index.js"
   },
@@ -18,8 +20,18 @@
   },
   "files": [
     "lib",
+    "umd",
     "README.md",
     "service-worker.js",
     "bin"
-  ]
+  ],
+  "devDependencies": {
+    "microbundle": "^0.15.1",
+    "rimraf": "^6.1.0"
+  },
+  "scripts": {
+    "// @NOTE: generate UMD bundle for Service Worker (Firefox doesn't support esm in SW)": "https://bugzilla.mozilla.org/show_bug.cgi?id=1247687",
+    "build": "rimraf ./umd && microbundle -f umd --no-compress",
+    "dev": "rimraf ./umd && microbundle watch -f umd --no-compress"
+  }
 }

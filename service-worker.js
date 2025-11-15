@@ -1,7 +1,9 @@
-import { build } from 'https://esm.sh/esbuild-standalone/build';
-import { generateHash } from 'https://esm.sh/esbuild-standalone/utils';
-// import { build } from '/lib/build.js';
-// import { generateHash } from '/lib/utils.js';
+// @NOTE: UMD "esbuildStandalone" import (firefox doesn't support 'module' type for SW)
+importScripts('https://unpkg.com/esbuild-standalone/umd/sdk.umd.js')
+// importScripts('/umd/sdk.umd.js')
+
+// @NOTE: UMD "esbuildStandalone" import (firefox doesn't support 'module' type for SW)
+importScripts('https://unpkg.com/esbuild-wasm@0.25.11/lib/browser.js')
 
 self.addEventListener('install', function (event) {
   self.skipWaiting()
@@ -18,7 +20,7 @@ self.addEventListener("fetch", async (event) => {
 
       const text = await fetch(event.request).then(target => target.text());
 
-      const [cacheKey, cache] = await Promise.all([generateHash(text), caches.open('esbuild-cache')])
+      const [cacheKey, cache] = await Promise.all([esbuildStandalone.generateHash(text), caches.open('esbuild-cache')])
       const cachedResponse = await cache.match(cacheKey);
 
       if (cachedResponse) {
@@ -59,7 +61,7 @@ self.addEventListener("fetch", async (event) => {
         // },
       };
 
-      const bundledCode = await build(virtualFiles);
+      const bundledCode = await esbuildStandalone.build(esbuild, virtualFiles);
 
       const networkResponse = new Response(bundledCode, {
         headers: { 'Content-Type': 'application/javascript' }
