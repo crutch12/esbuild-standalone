@@ -13,14 +13,30 @@ self.addEventListener('activate', function (event) {
   event.waitUntil(self.clients.claim());
 });
 
+function getBuildParams() {
+  const url = new URL(self.location.href)
+  return {
+    config: url.searchParams.get('config'),
+    tsconfig: url.searchParams.get('tsconfig'),
+  }
+}
+
 self.addEventListener("fetch", async (event) => {
-  if (event.request.destination === 'script' && event.request.url.startsWith(self.location.origin) && event.request.url.match(/\.(jsx|ts|tsx|css|vue)/)) {
+  if (event.request.destination !== 'script') return;
+  if (!event.request.url.startsWith(self.location.origin)) return;
+
+  const match = event.request.url.match(/\.(jsx|ts|tsx|css|vue)/)
+
+  if (match) {
     event.respondWith((async () => {
       const pathname = new URL(event.request.url).pathname
 
-      const text = await fetch(event.request).then(target => target.text());
+      const [text, { config, tsconfig }] = await Promise.all([
+        fetch(event.request).then(target => target.text()),
+        esbuildStandalone.fetchBuildConfigs(getBuildParams()),
+      ]);
 
-      const [cacheKey, cache] = await Promise.all([esbuildStandalone.generateHash(text), caches.open('esbuild-cache')])
+      const [cacheKey, cache] = await Promise.all([esbuildStandalone.generateHashKey(text, tsconfig, config), caches.open('esbuild-cache')])
       const cachedResponse = await cache.match(cacheKey);
 
       if (cachedResponse) {
@@ -61,7 +77,12 @@ self.addEventListener("fetch", async (event) => {
         // },
       };
 
-      const bundledCode = await esbuildStandalone.build(esbuild, virtualFiles);
+      const esbuildConfig = {
+        ...config,
+        ...(tsconfig ? { tsconfigRaw: tsconfig } : undefined),
+      }
+
+      const bundledCode = await esbuildStandalone.build(esbuild, virtualFiles, esbuildConfig);
 
       const networkResponse = new Response(bundledCode, {
         headers: { 'Content-Type': 'application/javascript' }
