@@ -77,12 +77,12 @@ self.addEventListener("fetch", async (event) => {
         // },
       };
 
-      const esbuildConfig = {
+      const esbuildOptions = {
         ...config,
         ...(tsconfig ? { tsconfigRaw: tsconfig } : undefined),
       }
 
-      const bundledCode = await esbuildStandalone.build(esbuild, virtualFiles, esbuildConfig);
+      const bundledCode = await esbuildStandalone.build(esbuild, virtualFiles, esbuildOptions);
 
       const networkResponse = new Response(bundledCode, {
         headers: { 'Content-Type': 'application/javascript' }
