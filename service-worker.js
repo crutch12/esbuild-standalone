@@ -3,7 +3,7 @@ importScripts('https://unpkg.com/esbuild-standalone@0.0.10/umd/sdk.umd.js')
 // importScripts('/umd/sdk.umd.js')
 
 // @NOTE: UMD "esbuild" import (firefox doesn't support 'module' type for SW)
-importScripts('https://unpkg.com/esbuild-wasm@0.25.11/lib/browser.js')
+importScripts('https://unpkg.com/esbuild-wasm@0.27.0/lib/browser.js')
 
 self.addEventListener('install', function (event) {
   self.skipWaiting()
