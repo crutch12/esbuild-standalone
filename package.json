@@ -29,7 +29,7 @@
     "rimraf": "^6.1.0"
   },
   "scripts": {
-    "// @NOTE: generate UMD bundle for Service Worker (Firefox doesn't support esm in SW)": "https://bugzilla.mozilla.org/show_bug.cgi?id=1247687",
+    "// @NOTE: generate UMD bundle for Service Worker (Firefox doesn't support esm in SW)": "https://bugzilla.mozilla.org/show_bug.cgi?id=1360870",
     "build": "rimraf ./umd && microbundle -f umd --no-compress --globals https://esm.sh/esbuild-wasm@0.27.0=esbuild",
     "dev": "rimraf ./umd && microbundle watch -f umd --no-compress --globals https://esm.sh/esbuild-wasm@0.27.0=esbuild",
     "prepublishOnly": "npm run build"
