@@ -1,7 +1,7 @@
 // @NOTE: UMD "esbuildStandalone" import (firefox doesn't support 'module' type for SW)
 // importScripts('https://unpkg.com/esbuild-standalone@0.0.11/umd/sdk.umd.js')
-// importScripts('/umd/sdk.umd.js')
-importScripts('/umd/sdk.global.js')
+importScripts('/umd/sdk.umd.js')
+// importScripts('/umd/sdk.global.js')
 
 // @NOTE: UMD "esbuild" import (firefox doesn't support 'module' type for SW)
 importScripts('https://unpkg.com/esbuild-wasm@0.27.0/lib/browser.js')
