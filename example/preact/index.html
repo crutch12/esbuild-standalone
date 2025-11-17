@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script type="importmap">
+    {
+      "imports": {
+        "preact": "https://esm.sh/preact@10.27.2",
+        "preact/jsx-runtime": "https://esm.sh/preact/jsx-runtime.js?deps=preact@10.27.2"
+      }
+    }
+  </script>
+  <!-- <script src="/lib/esbuild-standalone.js?tsconfig=./tsconfig.json" type="module"></script> -->
+  <script src="https://esm.sh/esbuild-standalone@0.0.9/es2022/esbuild-standalone.mjs?tsconfig=./tsconfig.json"
+    type="module"></script>
+
+  <script type="text/babel">
+    import { h, render } from 'preact';
+
+    function App() {
+      return (
+        <div>
+          <h1>Hello from Preact!</h1>
+          <p>This is a simple Preact application.</p>
+        </div>
+      );
+    }
+
+    const div = document.createElement('div')
+    document.body.append(div)
+    render(<App />, div);
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>
