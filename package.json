@@ -26,11 +26,14 @@
   ],
   "devDependencies": {
     "microbundle": "^0.15.1",
-    "rimraf": "^6.1.0"
+    "rimraf": "^6.1.0",
+    "tsup": "^8.5.1"
   },
   "scripts": {
     "// @NOTE: generate UMD bundle for Service Worker (Firefox doesn't support esm in SW)": "https://bugzilla.mozilla.org/show_bug.cgi?id=1360870",
-    "build": "rimraf ./umd && microbundle -f umd --no-compress --globals https://esm.sh/esbuild-wasm@0.27.0=esbuild",
+    "build:1": "rimraf ./umd && microbundle -f umd --no-compress --globals https://esm.sh/esbuild-wasm@0.27.0=esbuild",
+    "dev:1": "rimraf ./umd && microbundle watch -f umd --no-compress --globals https://esm.sh/esbuild-wasm@0.27.0=esbuild",
+    "build": "tsup --config tsup.config.ts",
     "dev": "rimraf ./umd && microbundle watch -f umd --no-compress --globals https://esm.sh/esbuild-wasm@0.27.0=esbuild",
     "prepublishOnly": "npm run build"
   }
