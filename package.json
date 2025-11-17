@@ -13,10 +13,9 @@
     "yargs": "^18.0.0"
   },
   "exports": {
-    ".": "./lib/esbuild-standalone.js",
-    "./sw": "./lib/esbuild-standalone-sw.js",
-    "./build": "./lib/build.js",
-    "./utils": "./lib/utils.js"
+    ".": "./lib/standalone.js",
+    "./sw": "./lib/standalone-sw.js",
+    "./sdk": "./lib/sdk/index.js"
   },
   "files": [
     "lib",
