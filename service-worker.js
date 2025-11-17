@@ -36,7 +36,11 @@ self.addEventListener("fetch", async (event) => {
         esbuildStandalone.fetchBuildConfigs(getBuildParams()),
       ]);
 
-      const [cacheKey, cache] = await Promise.all([esbuildStandalone.generateHashKey(text, tsconfig, config), caches.open('esbuild-cache')])
+      const [cacheKey, cache] = await Promise.all([
+        esbuildStandalone.generateHashKey(text, tsconfig, config),
+        caches.open(`${esbuildStandalone.pluginName}@${esbuildStandalone.version}`)
+      ])
+
       const cachedResponse = await cache.match(cacheKey);
 
       if (cachedResponse) {
