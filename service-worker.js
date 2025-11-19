@@ -12,7 +12,9 @@ const buildParams = {
 }
 
 self.addEventListener('message', (event) => {
-  if (event.data && typeof event.data === 'object' && event.data.type === `${esbuildStandalone.pluginName}@${esbuildStandalone.version}/build-params`) {
+  if (!event.data || typeof event.data !== 'object') return
+
+  if (event.data.type === esbuildStandalone.postMessageTypes.buildParams) {
     buildParams.config = event.data.payload.config
     buildParams.tsconfig = event.data.payload.tsconfig
   }
@@ -35,7 +37,7 @@ self.addEventListener("fetch", async (event) => {
 
       const [cacheKey, cache] = await Promise.all([
         esbuildStandalone.generateHashKey(text, tsconfig, config),
-        caches.open(`${esbuildStandalone.pluginName}@${esbuildStandalone.version}`)
+        caches.open(esbuildStandalone.pluginName)
       ])
 
       const cachedResponse = await cache.match(cacheKey);
