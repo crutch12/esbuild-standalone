@@ -5,14 +5,6 @@ importScripts('https://unpkg.com/esbuild-standalone@0.0.11/umd/sdk.umd.js')
 // @NOTE: UMD "esbuild" import (firefox doesn't support 'module' type for SW)
 importScripts('https://unpkg.com/esbuild-wasm@0.27.0/lib/browser.js')
 
-self.addEventListener('install', function (event) {
-  self.skipWaiting()
-});
-
-self.addEventListener('activate', function (event) {
-  event.waitUntil(self.clients.claim());
-});
-
 function getBuildParams() {
   const url = new URL(self.location.href)
   return {
