@@ -89,6 +89,7 @@ self.addEventListener("fetch", async (event) => {
         esbuildOptions,
         recursive: false,
         baseURI: event.request.url,
+        replaceImportMeta: false,
       });
 
       const networkResponse = new Response(output, {
