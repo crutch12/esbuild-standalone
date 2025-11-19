@@ -5,13 +5,18 @@ importScripts('https://unpkg.com/esbuild-standalone@0.0.11/umd/sdk.umd.js')
 // @NOTE: UMD "esbuild" import (firefox doesn't support 'module' type for SW)
 importScripts('https://unpkg.com/esbuild-wasm@0.27.0/lib/browser.js')
 
-function getBuildParams() {
-  const url = new URL(self.location.href)
-  return {
-    config: url.searchParams.get('config'),
-    tsconfig: url.searchParams.get('tsconfig'),
-  }
+// set by main process (via postMessage)
+const buildParams = {
+  config: undefined,
+  tsconfig: undefined
 }
+
+self.addEventListener('message', (event) => {
+  if (event.data && typeof event.data === 'object' && event.data.type === `${esbuildStandalone.pluginName}@${esbuildStandalone.version}/build-params`) {
+    buildParams.config = event.data.payload.config
+    buildParams.tsconfig = event.data.payload.tsconfig
+  }
+})
 
 self.addEventListener("fetch", async (event) => {
   if (event.request.destination !== 'script') return;
@@ -25,7 +30,7 @@ self.addEventListener("fetch", async (event) => {
 
       const [text, { config, tsconfig }] = await Promise.all([
         fetch(event.request).then(target => target.text()),
-        esbuildStandalone.fetchBuildConfigs(getBuildParams()),
+        esbuildStandalone.fetchBuildConfigs(buildParams),
       ]);
 
       const [cacheKey, cache] = await Promise.all([
