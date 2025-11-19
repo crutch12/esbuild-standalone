@@ -86,13 +86,19 @@ self.addEventListener("fetch", async (event) => {
         ...(tsconfig ? { tsconfigRaw: tsconfig } : undefined),
       }
 
-      const bundledCode = await esbuildStandalone.build(esbuild, virtualFiles, esbuildOptions);
+      const { output, cacheable } = await esbuildStandalone.build(esbuild, virtualFiles, {
+        esbuildOptions,
+        recursive: false,
+        baseURI: event.request.url,
+      });
 
-      const networkResponse = new Response(bundledCode, {
+      const networkResponse = new Response(output, {
         headers: { 'Content-Type': 'application/javascript' }
       })
 
-      await cache.put(cacheKey, networkResponse.clone());
+      if (cacheable) {
+        await cache.put(cacheKey, networkResponse.clone());
+      }
 
       return networkResponse
     })())

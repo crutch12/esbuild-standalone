@@ -20,7 +20,9 @@
 
   <script type="text/babel">
     import { createRoot } from 'react-dom/client';
-    import { App } from './app.jsx'
+    import { App } from './app.jsx' // processed by sw
+    // import { App } from '/example/react/app.jsx' // processed by sw
+    // import { App } from 'http://127.0.0.1:5500/example/react/app.jsx' // processed by sw (same origin only)
 
     const div = document.createElement('div')
     document.body.append(div)
