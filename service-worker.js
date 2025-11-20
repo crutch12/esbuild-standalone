@@ -1,5 +1,5 @@
 (() => {
   globalThis['ESBUILD_STANDALONE_IS_DEV'] = false // true for local library usage
-  const esbuildStandaloneImportBasePath = globalThis['ESBUILD_STANDALONE_IS_DEV'] ? '' : 'https://unpkg.com/esbuild-standalone@0.0.14'
+  const esbuildStandaloneImportBasePath = globalThis['ESBUILD_STANDALONE_IS_DEV'] ? '' : 'https://unpkg.com/esbuild-standalone@0.0.15'
   importScripts(`${esbuildStandaloneImportBasePath}/lib/sw-tools/index.js`)
 })()
