@@ -154,7 +154,7 @@ export { App }
 
 All examples (react/preact/etc.) available here:
 
-- https://crutch12.github.io/esbuild-standalone/examples
+- https://crutch12.github.io/esbuild-standalone/examples ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples))
 
 ## References
 

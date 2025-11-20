@@ -6,14 +6,14 @@
 
 ### With Service Worker
 
-- https://crutch12.github.io/esbuild-standalone/examples/react/ ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples/react/index.html))
+- [https://crutch12.github.io/esbuild-standalone/examples/react/](https://crutch12.github.io/esbuild-standalone/examples/react/) ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples/react/index.html))
 
 ### No Service Worker
 
-- https://crutch12.github.io/esbuild-standalone/examples/react/inline.html ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples/react/inline.html))
+- [https://crutch12.github.io/esbuild-standalone/examples/react/inline.html](https://crutch12.github.io/esbuild-standalone/examples/react/inline.html) ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples/react/inline.html))
 
 ## Preact
 
 ### No Service Worker
 
-- https://crutch12.github.io/esbuild-standalone/examples/preact/ ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples/preact/index.html))
+- [https://crutch12.github.io/esbuild-standalone/examples/preact/](https://crutch12.github.io/esbuild-standalone/examples/preact/) ([source code](https://github.com/crutch12/esbuild-standalone/blob/master/examples/preact/index.html))
