@@ -15,8 +15,6 @@ In your "public" directory
 importScripts('https://unpkg.com/esbuild-standalone@latest/service-worker.js')
 ```
 
-File should be available here: `http://{domain}/service-worker.js`
-
 2) create file `service-worker.mjs` (for "module" sw type support)
 
 ```js
@@ -24,7 +22,13 @@ File should be available here: `http://{domain}/service-worker.js`
 import 'https://unpkg.com/esbuild-standalone@latest/service-worker.mjs'
 ```
 
-File should be available here: `http://{domain}/service-worker.mjs`
+Files should be available here:
+
+- `https://{domain}/service-worker.js`
+- `https://{domain}/service-worker.mjs`
+
+> [!NOTE]
+> You can specify any `service-worker.js`/`service-worker.mjs` path with `data-sw-url`/`data-sw-esm-url` options. See [Options](#options).
 
 ## Usage
 
@@ -114,8 +118,8 @@ Create `index.html` file:
     <!-- /service-worker.js and /service-worker.mjs should be available -->
     <script src="https://esm.sh/esbuild-standalone/sw" type="module"></script>
 
-    <!-- @NOTE: You can provide url to service-worker.js file -->
-    <!-- <script src="https://esm.sh/esbuild-standalone/sw?url=/sw.js" type="module"></script> -->
+    <!-- @NOTE: You can provide data-sw-url to service-worker.js file -->
+    <script src="https://esm.sh/esbuild-standalone/sw" type="module" id="esbuild-standalone" data-sw-url="/sw.js"></script>
 
     <!-- Every script with "text/esbuild" will be built and executed with esbuild-wasm too  -->
     <script src="index.tsx" type="text/esbuild"></script>
@@ -148,6 +152,55 @@ function App({ name }) {
 }
 
 export { App }
+```
+
+## Options
+
+### Options API
+
+> [!NOTE]
+> If specified path is relative (e.g. `data-tsconfig="./tsconfig.json"`), it is resolved via current page `document.baseURI` value.
+
+```tsx
+type Options = {
+  config: string | undefined, // e.g. "./esbuild.config.json"
+  tsconfig: string | undefined, // e.g. "https://raw.githubusercontent.com/crutch12/esbuild-standalone/refs/heads/master/examples/preact/tsconfig.json"
+  // Service Worker setup options
+  swUrl: string | undefined, // e.g. /sw.js
+  swEsmUrl: string | undefined, // e.g. /sw.mjs
+  swType: 'classic' | 'module' | undefined,
+  swScope: string | undefined, // e.g. /pages
+  swUpdateViaCache: 'all' | 'imports' | 'none' | undefined
+}
+```
+
+### Usage 1. Specify with script `data-* attributes`
+
+> [!NOTE]
+> `id="esbuild-standalone"` is required for `data-* attributes` usage.
+
+```html
+<script src="https://esm.sh/esbuild-standalone/sw" type="module" id="esbuild-standalone"
+    data-sw-url="./service-worker.mjs" data-tsconfig="./tsconfig.json" data-config="./esbuild.config.json"></script>
+```
+
+### Usage 2. Specify with url search params
+
+```html
+<script src="https://esm.sh/esbuild-standalone/es2022/sw.mjs?config=./esbuild.config.json" type="module"></script>
+```
+
+### Usage 3. Specify with `window.esbuildStandaloneOptions`
+
+```html
+<script>
+  window.esbuildStandaloneOptions = {
+    swUrl: '/service-worker.js',
+    swEsmUrl: '/service-worker.mjs',
+    tsconfig: './tsconfig.json',
+  }
+</script>
+<script src="https://esm.sh/esbuild-standalone/sw"></script>
 ```
 
 ## Examples
