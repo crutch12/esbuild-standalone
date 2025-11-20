@@ -46,6 +46,18 @@
     const root = createRoot(div)
     root.render(<App name="inline script App with import usage (no SW required)" />)
   </script>
+
+  <script type="text/babel">
+    import { createRoot } from 'react-dom/client';
+
+    // full dynamic import (runtime param)
+    import('./app.jsx'.replace('', '')).then(({ App }) => {
+      const div = document.createElement('div')
+      document.body.append(div)
+      const root = createRoot(div)
+      root.render(<App name="inline script App with full dynamic import usage (no SW required)" />)
+    })
+  </script>
 </head>
 
 <body>
