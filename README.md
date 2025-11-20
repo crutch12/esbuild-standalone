@@ -1,26 +1,30 @@
-esbuild analog for [@babel/standalone](https://babeljs.io/docs/babel-standalone) built with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm)
+esbuild alternative for [@babel/standalone](https://babeljs.io/docs/babel-standalone) built with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm)
 
 `esbuild-standalone` is a script that allows you to write JSX/TSX directly in HTML without any build steps. Your source code is sent to the Service Worker, compiled, cached, and served to the browser as a JavaScript module.
 
 ## Installation
 
-> [!IMPORTANT]
-> Service Worker setup is required to preprocess files from relative import usages.
-> If use only `inline` scripts and don't use relative non-js imports (e.g. `import {App} from './App.tsx'`), then you may skip Service Worker Setup.
-
 ### Service Worker Setup
 
-#### Option 1. Using npm:
+In your "public" directory
 
-```sh
-npx esbuild-standalone init
+1) create file `service-worker.js` (for "classic" sw type support)
+
+```js
+// /service-worker.js
+importScripts('https://unpkg.com/esbuild-standalone@latest/service-worker.js')
 ```
 
-#### Option 2. Manually:
-
-- copy file https://unpkg.com/esbuild-standalone@latest/service-worker.js in your project (public) root
-
 File should be available here: `http://{domain}/service-worker.js`
+
+2) create file `service-worker.mjs` (for "module" sw type support)
+
+```js
+// /service-worker.mjs
+import 'https://unpkg.com/esbuild-standalone@latest/service-worker.mjs'
+```
+
+File should be available here: `http://{domain}/service-worker.mjs`
 
 ## Usage
 
@@ -32,7 +36,7 @@ Supported script types:
 - `text/ts`
 - `text/vue`
 
-### Inline
+### Inline (no SW setup required)
 
 Package: `https://esm.sh/esbuild-standalone`
 
@@ -42,14 +46,14 @@ Create `index.html` file:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- @IMPORTANT: ?deps is required for singleton libraries (e.g. react) -->
+    <!-- @IMPORTANT: ?external is required for singleton libraries (e.g. react) -->
     <!-- @NOTE: More info: https://esm.sh/ -->
     <script type="importmap">
     {
       "imports": {
         "react": "https://esm.sh/react@19.0.0",
-        "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime.js?deps=react@19.0.0",
-        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client?deps=react@19.0.0"
+        "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime.js?external=react",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client?external=react"
       }
     }
     </script>
@@ -85,7 +89,7 @@ Create `index.html` file:
 </html>
 ```
 
-### External (src)
+### External (SW setup required)
 
 Package: `https://esm.sh/esbuild-standalone/sw`
 
@@ -95,19 +99,19 @@ Create `index.html` file:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- @IMPORTANT: ?deps is required for singleton libraries (e.g. react) -->
+    <!-- @IMPORTANT: ?external is required for singleton libraries (e.g. react) -->
     <!-- @NOTE: More info: https://esm.sh/ -->
     <script type="importmap">
     {
       "imports": {
         "react": "https://esm.sh/react@19.0.0",
-        "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime.js?deps=react@19.0.0",
-        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client?deps=react@19.0.0"
+        "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime.js?external=react",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client?external=react"
       }
     }
     </script>
     <!-- @IMPORTANT: Requires Service Worker Setup -->
-    <!-- /service-worker.js should be available -->
+    <!-- /service-worker.js and /service-worker.mjs should be available -->
     <script src="https://esm.sh/esbuild-standalone/sw" type="module"></script>
 
     <!-- @NOTE: You can provide url to service-worker.js file -->
@@ -150,4 +154,5 @@ export { App }
 
 - https://babeljs.io/docs/babel-standalone
 - https://www.cacoos.com/blog/compiling-in-the-browser
-- https://github.com/esm-dev/tsx
+- https://github.com/esm-dev/tsx (https://esm.sh/#tsx)
+- https://github.com/guybedford/es-module-shims
