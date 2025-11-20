@@ -1,4 +1,16 @@
-[esbuild](https://esbuild.github.io/) alternative for [@babel/standalone](https://babeljs.io/docs/babel-standalone) made with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm)
+`esbuild-standalone` provides a standalone build of [Esbuild](https://esbuild.github.io/) for use in browsers. Made with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm).
+
+It's alternative for [@babel/standalone](https://babeljs.io/docs/babel-standalone) and [esm.sh/tsx](https://esm.sh/#tsx).
+
+## When (not) to use esbuild-standalone
+
+If you're using Esbuild in production, you should normally not use `esbuild-standalone`. Instead, you should use a build system running on Node.js, such as Esbuild or Vite, to transpile your JS ahead of time.
+
+However, there are some valid use cases for esbuild-standalone:
+
+- It provides an easy, convenient way to prototype with Esbuild. Using `esbuild-standalone`, you can get started using Esbuild with just a simple script tag in your HTML.
+- You want to write html pages that require transpilation (e.g. in confluence) without additional build/deploy stages.
+- You want to check your es6 code as quickly as possible, just using `index.html`
 
 ## How it works
 
@@ -10,7 +22,7 @@ It also may work without Service Worker setup, but with limitations.
 
 ### Service Worker Setup
 
-In your "public" directory
+In your "public"/"root" directory
 
 1) create file `service-worker.js` (for "classic" sw type support)
 

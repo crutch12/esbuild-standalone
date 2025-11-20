@@ -2,6 +2,10 @@
   "name": "esbuild-standalone",
   "version": "0.0.17",
   "type": "module",
+  "homepage": "https://github.com/crutch12/esbuild-standalone",
+  "repository": "crutch12/esbuild-standalone",
+  "author": "Konstantin Barabanov <criitch@yandex.ru>",
+  "description": "esbuild-standalone provides a standalone build of Esbuild for use in browsers. Made with Service Worker and esbuild-wasm.",
   "dependencies": {
     "@inquirer/confirm": "^5.1.20",
     "picocolors": "^1.1.1",
