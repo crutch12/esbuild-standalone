@@ -13,13 +13,15 @@
   "exports": {
     ".": "./lib/standalone.js",
     "./sw": "./lib/standalone-sw.js",
-    "./sdk": "./lib/sdk/index.js"
+    "./sdk": "./lib/sdk/index.js",
+    "./service-worker.mjs": "./service-worker.mjs"
   },
   "files": [
     "lib",
     "umd",
     "README.md",
     "service-worker.js",
+    "service-worker.mjs",
     "bin"
   ],
   "devDependencies": {

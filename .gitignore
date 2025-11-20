@@ -1,2 +1,4 @@
 node_modules
 /umd
+/lib/sw-tools/initialize.js
+/lib/sw-tools/initialize.js.map

@@ -17,5 +17,18 @@ export default defineConfig([
       }),
     ],
     format: 'umd' as 'iife',
-  }
+  },
+  {
+    entry: {
+      'initialize': './lib/sw-tools/initialize.mjs'
+    },
+    outDir: './lib/sw-tools',
+    target: 'es2022',
+    sourcemap: true,
+    outExtension: () => ({
+      js: '.js',
+    }),
+    globalName: 'esbuildStandaloneInitialize',
+    format: 'iife',
+  },
 ])
