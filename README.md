@@ -28,14 +28,14 @@ In your "public"/"root" directory
 
 ```js
 // /service-worker.js
-importScripts('https://unpkg.com/esbuild-standalone@latest/service-worker.js')
+importScripts('https://unpkg.com/esbuild-standalone@0.0.17/service-worker.js')
 ```
 
 2) create file `service-worker.mjs` (for "module" sw type support)
 
 ```js
 // /service-worker.mjs
-import 'https://unpkg.com/esbuild-standalone@latest/service-worker.mjs'
+import 'https://unpkg.com/esbuild-standalone@0.0.17/service-worker.mjs'
 ```
 
 Files should be available here:
@@ -98,13 +98,12 @@ Create `index.html` file:
         </div>
       }
 
-      const div = document.createElement('div')
-      document.body.append(div)
-      const root = createRoot(div)
+      const root = createRoot(document.getElementById('root'))
       root.render(<App name="esbuild-standalone" />)
     </script>
   </head>
   <body>
+    <div id="root">Loading...</div>
   </body>
 </html>
 ```
@@ -149,6 +148,7 @@ Create `index.html` file:
     <!-- <script src="index.tsx" type="module"></script> -->
   </head>
   <body>
+    <div id="root">Loading...</div>
   </body>
 </html>
 ```
@@ -160,9 +160,7 @@ import { createRoot } from 'react-dom/client';
 
 import { App } from './app.jsx' // import via service worker
 
-const div = document.createElement('div')
-document.body.append(div)
-const root = createRoot(div)
+const root = createRoot(document.getElementById('root'))
 root.render(<App name="esbuild-standalone" />)
 ```
 
