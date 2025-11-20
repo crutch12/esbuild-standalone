@@ -150,6 +150,12 @@ function App({ name }) {
 export { App }
 ```
 
+## Examples
+
+All examples (react/preact/etc.) available here:
+
+- https://crutch12.github.io/esbuild-standalone/examples
+
 ## References
 
 - https://babeljs.io/docs/babel-standalone
