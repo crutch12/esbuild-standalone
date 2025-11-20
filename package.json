@@ -1,6 +1,6 @@
 {
   "name": "esbuild-standalone",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "type": "module",
   "homepage": "https://github.com/crutch12/esbuild-standalone",
   "repository": "crutch12/esbuild-standalone",
