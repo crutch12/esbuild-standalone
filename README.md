@@ -1,6 +1,10 @@
-esbuild alternative for [@babel/standalone](https://babeljs.io/docs/babel-standalone) built with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm)
+[esbuild](https://esbuild.github.io/) alternative for [@babel/standalone](https://babeljs.io/docs/babel-standalone) made with [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and [esbuild-wasm](https://www.npmjs.com/package/esbuild-wasm)
+
+## How it works
 
 `esbuild-standalone` is a script that allows you to write JSX/TSX directly in HTML without any build steps. Your source code is sent to the Service Worker, compiled, cached, and served to the browser as a JavaScript module.
+
+It also may work without Service Worker setup, but with limitations.
 
 ## Installation
 
@@ -85,7 +89,7 @@ Create `index.html` file:
       const div = document.createElement('div')
       document.body.append(div)
       const root = createRoot(div)
-      root.render(<App name="App" />)
+      root.render(<App name="esbuild-standalone" />)
     </script>
   </head>
   <body>
@@ -118,12 +122,18 @@ Create `index.html` file:
     <!-- /service-worker.js and /service-worker.mjs should be available -->
     <script src="https://esm.sh/esbuild-standalone/sw" type="module"></script>
 
-    <!-- @NOTE: You can provide data-sw-url to service-worker.js file -->
-    <script src="https://esm.sh/esbuild-standalone/sw" type="module" id="esbuild-standalone" data-sw-url="/sw.js"></script>
+    <!-- @NOTE: You can provide data-sw-url to your service-worker.js file -->
+    <!-- <script
+      src="https://esm.sh/esbuild-standalone/sw"
+      type="module"
+      id="esbuild-standalone"
+      data-sw-url="/sw.js">
+    </script> -->
 
     <!-- Every script with "text/esbuild" will be built and executed with esbuild-wasm too  -->
     <script src="index.tsx" type="text/esbuild"></script>
-    <!-- type="module" works too -->
+
+    <!-- type="module" works too (thanks to Service Worker) -->
     <!-- <script src="index.tsx" type="module"></script> -->
   </head>
   <body>
@@ -138,8 +148,10 @@ import { createRoot } from 'react-dom/client';
 
 import { App } from './app.jsx' // import via service worker
 
-const root = createRoot(document.getElementById("root"))
-root.render(<App />)
+const div = document.createElement('div')
+document.body.append(div)
+const root = createRoot(div)
+root.render(<App name="esbuild-standalone" />)
 ```
 
 Create `app.jsx` file:
@@ -159,7 +171,7 @@ export { App }
 ### Options API
 
 > [!NOTE]
-> If specified path is relative (e.g. `data-tsconfig="./tsconfig.json"`), it is resolved via current page `document.baseURI` value.
+> If specified path is relative (e.g. `data-tsconfig="./tsconfig.json"`), it is resolved relatively to current page `document.baseURI` value.
 
 ```tsx
 type Options = {
@@ -180,8 +192,14 @@ type Options = {
 > `id="esbuild-standalone"` is required for `data-* attributes` usage.
 
 ```html
-<script src="https://esm.sh/esbuild-standalone/sw" type="module" id="esbuild-standalone"
-    data-sw-url="./service-worker.mjs" data-tsconfig="./tsconfig.json" data-config="./esbuild.config.json"></script>
+<script
+  src="https://esm.sh/esbuild-standalone/sw"
+  type="module"
+  id="esbuild-standalone"
+  data-sw-url="./service-worker.mjs"
+  data-tsconfig="./tsconfig.json"
+  data-config="./esbuild.config.json">
+</script>
 ```
 
 ### Usage 2. Specify with url search params
@@ -212,6 +230,6 @@ All examples (react/preact/etc.) available here:
 ## References
 
 - https://babeljs.io/docs/babel-standalone
-- https://www.cacoos.com/blog/compiling-in-the-browser
 - https://github.com/esm-dev/tsx (https://esm.sh/#tsx)
 - https://github.com/guybedford/es-module-shims
+- https://www.cacoos.com/blog/compiling-in-the-browser
