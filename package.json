@@ -1,6 +1,6 @@
 {
   "name": "esbuild-standalone",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "type": "module",
   "dependencies": {
     "@inquirer/confirm": "^5.1.20",
