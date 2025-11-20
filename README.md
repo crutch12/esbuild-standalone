@@ -28,14 +28,14 @@ In your "public"/"root" directory
 
 ```js
 // /service-worker.js
-importScripts('https://unpkg.com/esbuild-standalone@0.0.17/service-worker.js')
+importScripts('https://unpkg.com/esbuild-standalone@0.0.18/service-worker.js')
 ```
 
 2) create file `service-worker.mjs` (for "module" sw type support)
 
 ```js
 // /service-worker.mjs
-import 'https://unpkg.com/esbuild-standalone@0.0.17/service-worker.mjs'
+import 'https://unpkg.com/esbuild-standalone@0.0.18/service-worker.mjs'
 ```
 
 Files should be available here:
