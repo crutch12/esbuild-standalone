@@ -1,0 +1,1 @@
+import 'https://unpkg.com/esbuild-standalone@0.0.19/service-worker.mjs'

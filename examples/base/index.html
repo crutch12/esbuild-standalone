@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- @IMPORTANT: ?external is required for singleton libraries (e.g. react) -->
+  <!-- @NOTE: More info: https://esm.sh/ -->
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.0.0",
+        "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime.js?external=react",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client?external=react"
+      }
+    }
+    </script>
+  <!-- @IMPORTANT: Requires Service Worker Setup -->
+  <!-- /service-worker.js and /service-worker.mjs should be available -->
+  <script src="https://esm.sh/esbuild-standalone/sw" type="module" id="esbuild-standalone" data-sw-url="./sw.js"
+    data-sw-esm-url="./sw.mjs"></script>
+
+  <!-- @NOTE: You can provide data-sw-url to your service-worker.js file -->
+  <!-- <script
+      src="https://esm.sh/esbuild-standalone/sw"
+      type="module"
+      id="esbuild-standalone"
+      data-sw-url="/sw.js">
+    </script> -->
+
+  <!-- Every script with "text/esbuild" will be built and executed with esbuild-wasm too  -->
+  <script src="index.tsx" type="text/esbuild"></script>
+
+  <!-- type="module" works too (thanks to Service Worker) -->
+  <!-- <script src="index.tsx" type="module"></script> -->
+</head>
+
+<body>
+  <div id="root">Loading...</div>
+</body>
+
+</html>

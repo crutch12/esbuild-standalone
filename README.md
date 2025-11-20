@@ -81,20 +81,11 @@ Create `index.html` file:
 
     <!-- Every script with "text/babel" will be built and executed with esbuild-wasm  -->
     <script type="text/babel">
-      import { useState } from 'react';
       import { createRoot } from 'react-dom/client';
-
-      export function Button() {
-        const [count, setCount] = useState(0)
-        return <button onClick={() => setCount(v => v + 1)}>
-          Count: {count}
-        </button>
-      }
 
       export function App({ name }) {
         return <div>
           <h2>Hello, {name}</h2>
-          <Button />
         </div>
       }
 
