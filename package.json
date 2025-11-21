@@ -26,13 +26,19 @@
     "bin"
   ],
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.51.1",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.1",
     "esbuild-plugin-umd-wrapper": "^3.0.0",
+    "http-server": "^14.1.1",
     "rimraf": "^6.1.0",
     "tsup": "^8.5.1"
   },
   "scripts": {
     "build": "rimraf ./umd && tsup",
     "dev": "rimraf ./umd && tsup --watch",
+    "test": "npm run test:e2e",
+    "test:e2e": "dotenvx run -- npx playwright test --ui",
     "prepublishOnly": "npm run build"
   }
 }

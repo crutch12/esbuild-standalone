@@ -2,3 +2,11 @@ node_modules
 /umd
 /lib/sw-tools/initialize.js
 /lib/sw-tools/initialize.js.map
+.env
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
